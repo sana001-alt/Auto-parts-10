@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "419854574545",
+    "project_id": "autoparts-e668d",
+    "storage_bucket": "autoparts-e668d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419854574545:android:4ca59758f26423367f36f0",
+        "android_client_info": {
+          "package_name": "com.autoparts.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTs335BzPWM510W6TJHH9U9Ln25ZBHWoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

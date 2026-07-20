@@ -1,0 +1,156 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a buyer or seller in the Auto Parts C2C marketplace",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["id", "name", "email", "phone"]
+    },
+    "SparePart": {
+      "title": "SparePart",
+      "description": "Represents a car spare part listing in India",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "carBrand": { "type": "string" },
+        "carModel": { "type": "string" },
+        "category": { "type": "string" },
+        "partName": { "type": "string" },
+        "condition": { "type": "string", "enum": ["Brand New", "Like New", "Used (Good)", "For Scrap/Spares"] },
+        "location": { "type": "string" },
+        "state": { "type": "string" },
+        "district": { "type": "string" },
+        "contactName": { "type": "string" },
+        "contactPhone": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "sellerEmail": { "type": "string" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["id", "title", "description", "price", "carBrand", "carModel", "category", "condition", "location", "contactName", "contactPhone", "imageUrl", "sellerId", "sellerEmail", "createdAt"]
+    },
+    "Chat": {
+      "title": "Chat",
+      "description": "Represents a conversation room between a buyer and seller regarding a specific car part",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "partId": { "type": "string" },
+        "partTitle": { "type": "string" },
+        "partImageUrl": { "type": "string" },
+        "partPrice": { "type": "number" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "sellerName": { "type": "string" },
+        "lastMessageText": { "type": "string" },
+        "lastMessageAt": { "type": "integer" },
+        "lastSenderId": { "type": "string" }
+      },
+      "required": ["id", "partId", "partTitle", "partImageUrl", "partPrice", "buyerId", "buyerName", "sellerId", "sellerName", "lastMessageAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "An individual message within a conversation room",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["senderId", "text", "createdAt"]
+    },
+    "SellerReview": {
+      "title": "SellerReview",
+      "description": "Represents a rating and review submitted for a seller by a buyer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string" },
+        "partId": { "type": "string" },
+        "partTitle": { "type": "string" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["id", "sellerId", "buyerId", "buyerName", "rating", "comment", "createdAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Represents an unread chat notification for a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "chatId": { "type": "string" },
+        "recipientId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "integer" },
+        "read": { "type": "boolean" },
+        "partTitle": { "type": "string" },
+        "partPrice": { "type": "number" },
+        "partImageUrl": { "type": "string" },
+        "buyerId": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "sellerName": { "type": "string" }
+      },
+      "required": ["id", "chatId", "recipientId", "senderId", "text", "createdAt", "read", "partTitle", "partPrice", "buyerId", "buyerName", "sellerId", "sellerName"]
+    },
+    "Favorite": {
+      "title": "Favorite",
+      "description": "Represents a user's favorited car spare part listing",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "partId": { "type": "string" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["id", "userId", "partId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Collection of user account data"
+    },
+    "products/listings/items/{partId}": {
+      "schema": { "$ref": "#/entities/SparePart" },
+      "description": "Collection of car spare part listings under products/listings"
+    },
+    "chats/{chatId}": {
+      "schema": { "$ref": "#/entities/Chat" },
+      "description": "Active C2C buyer-seller marketplace chat rooms"
+    },
+    "chats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Individual messages inside a chat room"
+    },
+    "seller_reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/SellerReview" },
+      "description": "Ratings and written reviews for marketplace sellers"
+    },
+    "notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Unread message notifications for buyers and sellers"
+    },
+    "favorites/{favoriteId}": {
+      "schema": { "$ref": "#/entities/Favorite" },
+      "description": "Collection of user's favorited spare parts"
+    }
+  }
+}
